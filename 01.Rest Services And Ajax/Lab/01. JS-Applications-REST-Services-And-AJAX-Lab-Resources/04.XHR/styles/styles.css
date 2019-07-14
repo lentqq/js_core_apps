@@ -1,6 +1,7 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-      body {
-        font-family: "Open Sans", serif;
+/* @import url(https://fonts.googleapis.com/css?family=Open+Sans); */
+@import url(https://fonts.googleapis.com/css?family=Chakra+Petch&display=swap);      
+body {
+        font:20px "Chakra Petch", serif;
       }
       button {
         background-color: #4caf50;
