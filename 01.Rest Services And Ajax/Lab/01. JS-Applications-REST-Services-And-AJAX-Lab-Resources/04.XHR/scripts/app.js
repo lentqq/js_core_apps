@@ -16,6 +16,7 @@ function loadRepos() {
    .then((response) => response.json())
    .then((data) => {
       document.body.style.backgroundImage = "url('640759.jpg')";
+      document.getElementById('info').innerHTML = '';
       let person = Object.entries(data);
 
       for (const [key, value] of person) {
