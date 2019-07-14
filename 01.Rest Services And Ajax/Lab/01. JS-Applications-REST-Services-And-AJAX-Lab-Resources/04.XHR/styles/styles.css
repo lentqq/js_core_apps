@@ -1,7 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
       body {
         font-family: "Open Sans", serif;
-        background-image: url(https://wallpaperaccess.com/full/640759.jpg)
       }
       button {
         background-color: #4caf50;
@@ -15,6 +14,4 @@
       button:hover {
         background-color: #45a049;
       }
-      ul {
-        color:yellow;
-      }
+      
