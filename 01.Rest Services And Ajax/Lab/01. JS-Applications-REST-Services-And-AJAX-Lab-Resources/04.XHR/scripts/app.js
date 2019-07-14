@@ -15,13 +15,14 @@ function loadRepos() {
    fetch(url)
    .then((response) => response.json())
    .then((data) => {
-
+      document.body.style.backgroundImage = "url('640759.jpg')";
       let person = Object.entries(data);
 
       for (const [key, value] of person) {
          let listItem = document.createElement('li');
          listItem.textContent = `${key}: ${value}`;
          document.getElementById('info').appendChild(listItem);
+         document.getElementById('info').style.color = 'yellow';
       }
    })
 };
