@@ -2,16 +2,11 @@ function loadCommits() {
     let userName = document.getElementById('username').value;
     let repo = document.getElementById('repo').value;
     let ulCommits = document.getElementById('commits');
+    const url = `https://api.github.com/repos/${userName}/${repo}/commits`;
     ulCommits.innerHTML = 'Loading...'
 
-    fetch(`https://api.github.com/repos/${userName}/${repo}/commits`)
-        .then(response => {
-            if (response.status >= 400) {
-                throw new Error(response.error);
-            };
-
-            return response.json()
-        })
+    fetch(url)
+        .then(handler)
         .then((data) => {
 
             ulCommits.innerHTML = '';
@@ -24,15 +19,19 @@ function loadCommits() {
                 if (messages.hasOwnProperty(key)) {
                     const message = messages[key];
                     let listItem = document.createElement('li');
-                    listItem.textContent = `Svetlin Nakov: ${message}`;
+                    listItem.textContent = `${userName}: ${message}`;
                     ulCommits.appendChild(listItem);
                 }
             }
         })
-        .catch((error) => {
-            ulCommits.innerHTML = '';
-            let listItem = document.createElement('li');
-            listItem.textContent = `Error: ${JSON.stringify(error)}`;
-            ulCommits.appendChild(listItem);
-        });
-}
+        .catch((error) => console.log(error));
+
+    const handler = function (response) {
+        if (response.status >= 400) {
+            throw new Error(`Network response is not OK!!! Error: ${response.statusText}`);
+        };
+
+        return response.json();
+    }
+};
+
