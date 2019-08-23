@@ -1,39 +1,38 @@
-function loadCommits() {
+const loadCommits = async() => {
+
     let userName = document.getElementById('username').value;
-    let repo = document.getElementById('repo').value;
-    let ulCommits = document.getElementById('commits');
-    ulCommits.innerHTML = 'Loading...'
+    let repository = document.getElementById('repo').value;
+    let container  = document.getElementById('commits');
+    let urlCommits = `https://api.github.com/repos/${userName}/${repository}/commits`;
+    container.innerHTML = 'Loading...';
 
-    fetch(`https://api.github.com/repos/${userName}/${repo}/commits`)
-        .then(response => {
-            if (response.status >= 400) {
-                throw new Error(response.error);
-            };
-
-            return response.json()
-        })
-        .then((data) => {
-
-            ulCommits.innerHTML = '';
-
-            let messages = data.map((item) => {
-                return item.commit.message;
-            });
-
-            for (const key in messages) {
-                if (messages.hasOwnProperty(key)) {
-                    const message = messages[key];
-                    let listItem = document.createElement('li');
-                    listItem.textContent = `Svetlin Nakov: ${message}`;
-                    ulCommits.appendChild(listItem);
-                }
-            }
-        })
-        .catch((error) => {
-            ulCommits.innerHTML = '';
-            let listItem = document.createElement('li');
-            listItem.textContent = `Error: ${JSON.stringify(error)}`;
-            ulCommits.appendChild(listItem);
+    await fetch(urlCommits)
+    .then(handler)
+    .then((data) => {
+        container.innerHTML = '';
+        let messages = data.map((item) => {
+            return item.commit.message;
         });
+        
+        for (const key in messages) {
+            if (messages.hasOwnProperty(key)) {
+                const message = messages[key];
+                let itemList = document.createElement('li');
+                itemList.textContent = `${userName}: ${message}`;
+                container.appendChild(itemList);
+            }
+        }
+
+    })
+    .catch((error) => console.error(error));
 }
 
+const handler  = function (response) {
+
+    if (response.status >= 400) {
+        throw new Error(`Network response is not OK!!! Error: ${response.statusText}`);
+    }
+    return response.json();
+};
+
+// loadCommits();
